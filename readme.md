@@ -18,3 +18,13 @@ aws>
 - *Windows*: C:\Users\username\\.aws
 
 https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html
+
+
+
+# .env example
+```
+aws_region=us-east-1
+aws_access_key_id=XXXXXXXXXXXXXXXXXXXXXX
+aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXX
+openai_api_secret_key=XXXXXXXXXXXXXXXXXXXXXXXXX
+```
