@@ -1,0 +1,7 @@
+*.mp3
+*.wav
+*lock.json
+cookies.json
+
+.env
+.history

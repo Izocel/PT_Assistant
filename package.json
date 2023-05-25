@@ -1,0 +1,21 @@
+{
+  "name": "pt_assistant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.py",
+  "scripts": {
+    "activate": "cd /PT_Virtual_ENV/Scripts && activate.bat && cd ../../",
+    "init": "python -m venv PT_Virtual_ENV && npm run activate",
+    "install": "pip install -r dependencies.md",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bing",
+    "chatgpt",
+    "assistant",
+    "voice",
+    "recognition"
+  ],
+  "author": "",
+  "license": "ISC"
+}
