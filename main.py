@@ -16,15 +16,16 @@ config = dotenv_values(".env")
 # Initialize the OpenAI API
 openai.api_key = config["openai_api_secret_key"]
 
-#Alternative is to use .env, 'secrets', .aws/credentials file or environemnt variable setup
+# Alternative is to use .env, 'secrets', .aws/credentials file or environemnt variable setup
 aws_config = Config(
-    region_name = config["aws_region"]
+    region_name=config["aws_region"]
 )
 
 # Create a recognizer object and wake word variables
 recognizer = sr.Recognizer()
 BING_WAKE_WORD = "bing"
-GPT_WAKE_WORD = "gpt"
+GPT_WAKE_WORD = "google"
+
 
 def get_wake_word(phrase):
     if BING_WAKE_WORD in phrase.lower():
@@ -33,7 +34,8 @@ def get_wake_word(phrase):
         return GPT_WAKE_WORD
     else:
         return None
-    
+
+
 def synthesize_speech(text, output_filename):
     polly = boto3.client('polly', config=aws_config)
     response = polly.synthesize_speech(
@@ -46,16 +48,20 @@ def synthesize_speech(text, output_filename):
     with open(output_filename, 'wb') as f:
         f.write(response['AudioStream'].read())
 
+
 def play_audio(file):
     sound = pydub.AudioSegment.from_file(file, format="mp3")
     playback.play(sound)
+
 
 async def main():
     while True:
 
         with sr.Microphone() as source:
             recognizer.adjust_for_ambient_noise(source)
-            print(f"Waiting for wake words 'ok bing' or 'ok chat'...")
+            awaitSentence = "Waiting for wake words: '" + \
+                BING_WAKE_WORD + " or '" + GPT_WAKE_WORD + "'..."
+            print(awaitSentence)
             while True:
                 audio = recognizer.listen(source)
                 try:
@@ -93,7 +99,7 @@ async def main():
                 continue
 
             if wake_word == BING_WAKE_WORD:
-                bot = Chatbot(cookie_path='cookies.json')
+                bot = await Chatbot.create()
                 response = await bot.ask(prompt=user_input, conversation_style=ConversationStyle.precise)
                 # Select only the bot response from the response dictionary
                 for message in response["item"]["messages"]:
@@ -108,7 +114,7 @@ async def main():
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "system", "content":
-                        "You are a helpful assistant."},
+                         "You are a helpful assistant."},
                         {"role": "user", "content": user_input},
                     ],
                     temperature=0.5,
@@ -121,7 +127,7 @@ async def main():
                 )
 
                 bot_response = response["choices"][0]["message"]["content"]
-                
+
         print("Bot's response:", bot_response)
         synthesize_speech(bot_response, 'response.mp3')
         play_audio('response.mp3')
