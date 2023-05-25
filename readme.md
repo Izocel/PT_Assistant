@@ -30,4 +30,6 @@ aws_region=us-east-1
 aws_access_key_id=XXXXXXXXXXXXXXXXXXXXXX
 aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXX
 openai_api_secret_key=XXXXXXXXXXXXXXXXXXXXXXXXX
+sentry_dsn=https://xxxxxxxxxxxxxxxxx@484848484.ingest.sentry.io/48484848
+sentry_env=developpement
 ```

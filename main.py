@@ -9,9 +9,18 @@ from pydub import playback
 import speech_recognition as sr
 from EdgeGPT import Chatbot, ConversationStyle
 from dotenv import dotenv_values
+import sentry_sdk
+
 
 config = dotenv_values(".env")
+appName = config["name"] + "|v" + config["version"]
 
+sentry_sdk.init(
+    dsn=config["sentry_dsn"],
+    environment=config["sentry_env"],
+    release=config["version"],
+    traces_sample_rate=1.0
+)
 
 # Initialize the OpenAI API
 openai.api_key = config["openai_api_secret_key"]

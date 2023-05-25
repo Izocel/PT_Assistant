@@ -8,3 +8,5 @@ pydub
 SpeechRecognition
 PyAudio
 python-dotenv
+
+sentry-sdk
