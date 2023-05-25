@@ -1,8 +1,10 @@
 # Python V-Environement
 - ```npm init```
 - Be sure that after that every python shell command you run are from the Virtual env (PT_Virtual_ENV)</>
-
-- ```npm install``` (install new dependenncies into the venv)
+- Be sure to switch the vscode python interpreter to your venv (F1 --> Python: Select interpreter)
+- Install deps -> refer to `npm install`
+- Hit F5 to launch program in debug mode
+- ENJOY !!!
 
 # AWS CLI Init [optional] but cloud configuration required
 ```shell

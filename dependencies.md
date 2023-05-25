@@ -8,5 +8,3 @@ pydub
 SpeechRecognition
 PyAudio
 python-dotenv
-
-aws-shell

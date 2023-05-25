@@ -8,17 +8,19 @@ import pydub
 from pydub import playback
 import speech_recognition as sr
 from EdgeGPT import Chatbot, ConversationStyle
-from dotenv import load_dotenv
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
 
 
 # Initialize the OpenAI API
-openai.api_key = "yoursupersecretheredontusethisinproduction"
+openai.api_key = config["openai_api_secret_key"]
 
 #Alternative is to use .env, 'secrets', .aws/credentials file or environemnt variable setup
 aws_config = Config(
-    region_name='us-east-1',
-    aws_access_key_id="xxxxxxxxxxxx",
-    aws_secret_access_key="yoursupersecretheredontusethisinproduction"
+    region_name=config["aws_region"],
+    aws_access_key_id=config["aws_access_key_id"],
+    aws_secret_access_key=config["aws_secret_access_key"]
 )
 
 # Create a recognizer object and wake word variables
