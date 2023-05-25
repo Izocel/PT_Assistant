@@ -18,9 +18,7 @@ openai.api_key = config["openai_api_secret_key"]
 
 #Alternative is to use .env, 'secrets', .aws/credentials file or environemnt variable setup
 aws_config = Config(
-    region_name=config["aws_region"],
-    aws_access_key_id=config["aws_access_key_id"],
-    aws_secret_access_key=config["aws_secret_access_key"]
+    region_name = config["aws_region"]
 )
 
 # Create a recognizer object and wake word variables
@@ -37,7 +35,7 @@ def get_wake_word(phrase):
         return None
     
 def synthesize_speech(text, output_filename):
-    polly = boto3.client('polly', region_name='us-west-1')
+    polly = boto3.client('polly', config=aws_config)
     response = polly.synthesize_speech(
         Text=text,
         OutputFormat='mp3',
