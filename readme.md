@@ -1,5 +1,6 @@
 # Python V-Environement
 - ```npm init```
+- Set `.env` file at workspace root.
 - Be sure that after that every python shell command you run are from the Virtual env (PT_Virtual_ENV)</>
 - Be sure to switch the vscode python interpreter to your venv (F1 --> Python: Select interpreter)
 - Install deps -> refer to `npm install`
