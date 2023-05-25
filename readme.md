@@ -1,9 +1,10 @@
 # Python V-Environement
-- ```npm install```
+- ```npm init```
+- Be sure that after that every python shell command you run are from the Virtual env (PT_Virtual_ENV)</>
 
-** Be sure that after that every python shell command you run are from the Virtual env (PT_Virtual_ENV)</>
+- ```npm install``` (install new dependenncies into the venv)
 
-# AWS CLI Init
+# AWS CLI Init [optional] but cloud configuration required
 ```shell
 $ aws-shell
 aws> configure

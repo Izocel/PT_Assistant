@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 
 # Initialize the OpenAI API
-openai.api_key = "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"
+openai.api_key = "yoursupersecretheredontusethisinproduction"
 
 #Alternative is to use .env, 'secrets', .aws/credentials file or environemnt variable setup
 aws_config = Config(
