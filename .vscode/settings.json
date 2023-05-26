@@ -11,5 +11,6 @@
         "**/.settings": false,
         "**/.factorypath": false
     },
-    "explorerExclude.backup": {}
+    "explorerExclude.backup": {},
+    "python.analysis.typeCheckingMode": "off"
 }

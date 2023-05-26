@@ -1,85 +1,56 @@
-import openai
+from time import sleep
 import asyncio
-import re
 import whisper
-import boto3
-from botocore.config import Config
-import pydub
-from pydub import playback
-import speech_recognition as sr
-from EdgeGPT import Chatbot, ConversationStyle
-from dotenv import dotenv_values
+import speech_recognition
 import sentry_sdk
+from BingBot import BingBot
+from GptBot import GptBot
+from PollySpeechSynth import PollySpeechSynth
 
-
+from dotenv import dotenv_values
 config = dotenv_values(".env")
-appName = config["name"] + "|v" + config["version"]
 
-sentry_sdk.init(
-    dsn=config["sentry_dsn"],
-    environment=config["sentry_env"],
-    release=config["version"],
-    traces_sample_rate=1.0
-)
-
-# Initialize the OpenAI API
-openai.api_key = config["openai_api_secret_key"]
-
-# Alternative is to use .env, 'secrets', .aws/credentials file or environemnt variable setup
-aws_config = Config(
-    region_name=config["aws_region"]
-)
-
-# Create a recognizer object and wake word variables
-recognizer = sr.Recognizer()
-BING_WAKE_WORD = "bing"
-GPT_WAKE_WORD = "google"
-
-
-def get_wake_word(phrase):
-    if BING_WAKE_WORD in phrase.lower():
-        return BING_WAKE_WORD
-    elif GPT_WAKE_WORD in phrase.lower():
-        return GPT_WAKE_WORD
-    else:
-        return None
-
-
-def synthesize_speech(text, output_filename):
-    polly = boto3.client('polly', config=aws_config)
-    response = polly.synthesize_speech(
-        Text=text,
-        OutputFormat='mp3',
-        VoiceId='Salli',
-        Engine='neural'
+if config["sentry_env"] != 'production':
+    sentry_sdk.init(
+        dsn=config["sentry_dsn"],
+        environment=config["sentry_env"],
+        release=config["version"],
+        traces_sample_rate=1.0
     )
 
-    with open(output_filename, 'wb') as f:
-        f.write(response['AudioStream'].read())
+BING_WAKE_WORD = "bing"
+GPT_WAKE_WORD = "google"
+appName = config["name"] + "|v" + config["version"]
 
+polly = PollySpeechSynth()
+bingBot = BingBot()
+gptBot = GptBot()
 
-def play_audio(file):
-    sound = pydub.AudioSegment.from_file(file, format="mp3")
-    playback.play(sound)
-
+# Create a recognizer object and wake word variables
+recognizer = speech_recognition.Recognizer()
 
 async def main():
-    while True:
+    await bingBot.init()
 
-        with sr.Microphone() as source:
+    while True:
+        with speech_recognition.Microphone() as source:
             recognizer.adjust_for_ambient_noise(source)
+
             awaitSentence = "Waiting for wake words: '" + \
-                BING_WAKE_WORD + " or '" + GPT_WAKE_WORD + "'..."
+                            BING_WAKE_WORD + " or '" + GPT_WAKE_WORD + "'..."
+
             print(awaitSentence)
             while True:
                 audio = recognizer.listen(source)
                 try:
                     with open("audio.wav", "wb") as f:
                         f.write(audio.get_wav_data())
+
                     # Use the preloaded tiny_model
                     model = whisper.load_model("tiny")
                     result = model.transcribe("audio.wav")
                     phrase = result["text"]
+
                     print(f"You said: {phrase}")
 
                     wake_word = get_wake_word(phrase)
@@ -87,60 +58,56 @@ async def main():
                         break
                     else:
                         print("Not a wake word. Try again.")
+
                 except Exception as e:
                     print("Error transcribing audio: {0}".format(e))
                     continue
 
             print("Speak a prompt...")
-            synthesize_speech('What can I help you with?', 'response.mp3')
-            play_audio('response.mp3')
+
+            polly.text_to_speech('What can I help you with?')
             audio = recognizer.listen(source)
 
             try:
                 with open("audio_prompt.wav", "wb") as f:
                     f.write(audio.get_wav_data())
+
                 model = whisper.load_model("base")
                 result = model.transcribe("audio_prompt.wav")
                 user_input = result["text"]
+
                 print(f"You said: {user_input}")
+
             except Exception as e:
                 print("Error transcribing audio: {0}".format(e))
                 continue
 
+            bot_response = "I was not able to get any awnser"
             if wake_word == BING_WAKE_WORD:
-                bot = await Chatbot.create()
-                response = await bot.ask(prompt=user_input, conversation_style=ConversationStyle.precise)
-                # Select only the bot response from the response dictionary
-                for message in response["item"]["messages"]:
-                    if message["author"] == "bot":
-                        bot_response = message["text"]
-                # Remove [^#^] citations in response
-                bot_response = re.sub('\[\^\d+\^\]', '', bot_response)
+                bot_response = await bingBot.parse(user_input)
 
-            else:
-                # Send prompt to GPT-3.5-turbo API
-                response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "system", "content":
-                         "You are a helpful assistant."},
-                        {"role": "user", "content": user_input},
-                    ],
-                    temperature=0.5,
-                    max_tokens=150,
-                    top_p=1,
-                    frequency_penalty=0,
-                    presence_penalty=0,
-                    n=1,
-                    stop=["\nUser:"],
-                )
-
-                bot_response = response["choices"][0]["message"]["content"]
+            elif wake_word == GPT_WAKE_WORD:
+                bot_response = gptBot.parse(user_input)
 
         print("Bot's response:", bot_response)
-        synthesize_speech(bot_response, 'response.mp3')
-        play_audio('response.mp3')
-        await bot.close()
+        polly.text_to_speech(bot_response)
+        sleep(1)
+
+
+def get_wake_word(phrase):
+    phrase = phrase.lower()
+    if BING_WAKE_WORD in phrase:
+        return BING_WAKE_WORD
+    elif GPT_WAKE_WORD in phrase:
+        return GPT_WAKE_WORD
+    else:
+        return None
+
+
+def synth_res_toFile(response, output_filename):
+    with open(output_filename, 'wb') as f:
+        f.write(response['AudioStream'].read())
+
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -7,3 +7,4 @@ cookies.json
 .history
 
 PT_Virtual_ENV/
+__pycache__/
