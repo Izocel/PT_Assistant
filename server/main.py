@@ -1,3 +1,4 @@
+from flask import Flask
 from time import sleep
 import asyncio
 import whisper
@@ -9,6 +10,12 @@ from PollySpeechSynth import PollySpeechSynth
 
 from dotenv import dotenv_values
 config = dotenv_values(".env")
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello, World!\n I'm a AI powered Flask API, "
 
 if config["sentry_env"] != 'production':
     sentry_sdk.init(

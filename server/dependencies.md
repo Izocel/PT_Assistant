@@ -1,6 +1,6 @@
+Flask
 boto3
 botocore
-EdgeGPT
 EdgeGPT
 openai
 openai_whisper

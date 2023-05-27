@@ -6,5 +6,5 @@ cookies.json
 .env
 .history
 
-PT_Virtual_ENV/
+Virtual_ENV/
 __pycache__/

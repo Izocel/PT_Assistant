@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.py",
   "scripts": {
-    "init": "python -m venv PT_Virtual_ENV && npm run activate",
-    "activate": "cd PT_Virtual_ENV/Scripts && activate.bat && cd ../../",
+    "init": "python -m venv Virtual_ENV && npm run activate",
+    "activate": "cd Virtual_ENV/Scripts && activate.bat && cd ../../",
     "install": "pip install -r dependencies.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
