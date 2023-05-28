@@ -1,8 +1,13 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import React, { useState } from 'react';
+import { env } from './configs/env';
 
-function Home() {
+function Home(props) {
+
+  const [s1, sets1] = useState('bob');
+
   function render() {
     return (
       <div>
@@ -36,6 +41,8 @@ function Home() {
             </button>
           </a>
         </div>
+        <h2>{process.env.NODE_ENV}</h2>
+        <h2>{env.TEST}</h2>
       </div>
     );
   }
@@ -45,10 +52,10 @@ function Home() {
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
   );
 }
