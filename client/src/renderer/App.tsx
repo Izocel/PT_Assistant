@@ -27,15 +27,30 @@ function Home(props) {
 
   useEffect(() => {
     getMediaDevices();
-  }, [devices]);
+  }, []);
 
   function render() {
     return (
-      <div className="text-center">
-        <img width="200" alt="icon" src={icon} />
-        <h1>electron-react-boilerplate</h1>
+      <div>
+        <div className="d-flex flex-row-reverse topVideo">
+          <video ref={videoRef} />
+        </div>
 
-        <video width={"50%"} ref={videoRef} />
+
+        <div className="input-group bottomInput">
+          <input
+            type="text"
+            className="form-control"
+            aria-label="Text input with send button"
+            placeholder="Ask something to the AI..."
+          />
+          <div className="input-group-append">
+            <button type="button" className="btn btn-lg btn-primary">
+              <i className="fa-regular fa-paper-plane"></i>
+            </button>
+
+          </div>
+        </div>
       </div>
     );
   }

@@ -11,46 +11,69 @@ body {
     #dd5789 51.77%,
     #7a2c9e 129.35%
   );
-  font-family: sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: 'Fira sans', sans-serif;
 }
 
-button {
-  background-color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
-  appearance: none;
-  font-size: 1.3rem;
-  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
-    0px 18px 88px -4px rgba(24, 39, 75, 0.14);
-  transition: all ease-in 0.1s;
-  cursor: pointer;
-  opacity: 0.9;
-}
-
-button:hover {
-  transform: scale(1.05);
-  opacity: 1;
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  height: fit-content;
-  width: fit-content;
-  margin: 10px;
-}
-
-a:hover {
-  opacity: 1;
-  text-decoration: none;
+#root {
+  height: 100vh;
 }
 
 video {
-  width: "100%";
-  max-width: "100%";
-  height: 'auto';
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  border-radius:1rem;
+  background-color:rgba(24, 39, 75, 0.14);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  background-image: url("https://www.nicepng.com/png/detail/136-1366211_group-of-10-guys-login-user-icon-png.png");
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+.topVideo {
+  width: auto;
+  max-width: 20%;
+  position: absolute !important;
+  padding: 1rem;
+  top:0;
+  right:0;
+}
+
+
+.bottomInput {
+  background-color:rgba(24, 39, 75, 0.14);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  font-size: x-large !important;
+  padding: 2rem;
+  position: absolute !important;
+  padding-inline: 250px !important;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+.bottomInput button{
+  color: #fff;
+}
+
+.bottomInput input{
+  color: #fff;
+  font-weight: 700;
+  background-color:rgba(24, 39, 75, 0.14);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.bottomInput input:focus{
+  color: #fff;
+  font-weight: 700;
+  background-color:rgba(24, 39, 75, 0.14);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.bottomInput input::placeholder{
+  color: #fff;
 }
