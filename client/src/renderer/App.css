@@ -35,8 +35,10 @@ video {
 }
 
 .topVideo {
-  width: auto;
-  max-width: 20%;
+  width: 400px;
+  height: 250px;
+  max-width: 400px;
+  max-height: 250;
   position: absolute !important;
   padding: 1rem;
   top:0;
