@@ -1,9 +1,7 @@
-from flask import Flask
 from time import sleep
 import asyncio
 import whisper
 import speech_recognition
-import sentry_sdk
 from BingBot import BingBot
 from GptBot import GptBot
 from PollySpeechSynth import PollySpeechSynth
@@ -11,19 +9,6 @@ from PollySpeechSynth import PollySpeechSynth
 from dotenv import dotenv_values
 config = dotenv_values(".env")
 
-app = Flask(__name__)
-
-@app.route("/")
-def hello():
-    return "Hello, World!\n I'm a AI powered Flask API, "
-
-if config["sentry_env"] != 'production':
-    sentry_sdk.init(
-        dsn=config["sentry_dsn"],
-        environment=config["sentry_env"],
-        release=config["version"],
-        traces_sample_rate=1.0
-    )
 
 BING_WAKE_WORD = "bing"
 GPT_WAKE_WORD = "google"

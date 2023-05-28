@@ -2,7 +2,7 @@
   "name": "pt_assistant",
   "version": "1.0.0",
   "description": "",
-  "main": "main.py",
+  "main": "server.py",
   "scripts": {
     "init": "python -m venv Virtual_ENV && npm run activate",
     "activate": "cd Virtual_ENV/Scripts && activate.bat && cd ../../",
