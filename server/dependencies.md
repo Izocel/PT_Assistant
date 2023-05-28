@@ -5,7 +5,6 @@ EdgeGPT
 openai
 openai_whisper
 pydub
-SpeechRecognition
 PyAudio
 python-dotenv
 
