@@ -1,48 +1,41 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
-import React, { useState } from 'react';
-import { env } from './configs/env';
+import React, { useEffect, useRef, useState } from "react";
+import { MemoryRouter as Router, Routes, Route } from "react-router-dom";
+import icon from "../../assets/icon.svg";
+import "./App.css";
 
 function Home(props) {
+  const [devices, setDevices] = useState();
+  const videoRef = useRef();
 
-  const [s1, sets1] = useState('bob');
+  async function getMediaDevices() {
+    await navigator.permissions.query({ name: "camera" });
+
+    const options = { audio: true, video: true };
+    const founds = navigator.mediaDevices;
+    setDevices(founds);
+
+    try {
+      let video = videoRef.current;
+      video.srcObject = await founds.getUserMedia(options);
+      video.play();
+    } catch (error) {
+      console.error(error);
+    }
+
+    console.warn(devices);
+  }
+
+  useEffect(() => {
+    getMediaDevices();
+  }, [devices]);
 
   function render() {
     return (
-      <div>
-        <div className="Home">
-          <img width="200" alt="icon" src={icon} />
-        </div>
+      <div className="text-center">
+        <img width="200" alt="icon" src={icon} />
         <h1>electron-react-boilerplate</h1>
-        <div className="Home">
-          <a
-            href="https://electron-react-boilerplate.js.org/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <button type="button">
-              <span role="img" aria-label="books">
-                📚
-              </span>
-              Read our docs
-            </button>
-          </a>
-          <a
-            href="https://github.com/sponsors/electron-react-boilerplate"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <button type="button">
-              <span role="img" aria-label="folded hands">
-                🙏
-              </span>
-              Donate
-            </button>
-          </a>
-        </div>
-        <h2>{process.env.NODE_ENV}</h2>
-        <h2>{env.TEST}</h2>
+
+        <video width={"50%"} ref={videoRef} />
       </div>
     );
   }
@@ -52,10 +45,10 @@ function Home(props) {
 
 export default function App() {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }

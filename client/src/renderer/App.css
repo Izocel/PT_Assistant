@@ -3,7 +3,6 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 body {
-  position: relative;
   color: white;
   height: 100vh;
   background: linear-gradient(
@@ -13,10 +12,6 @@ body {
     #7a2c9e 129.35%
   );
   font-family: sans-serif;
-  overflow-y: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 button {
@@ -54,9 +49,8 @@ a:hover {
   text-decoration: none;
 }
 
-.Home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+video {
+  width: "100%";
+  max-width: "100%";
+  height: 'auto';
 }
