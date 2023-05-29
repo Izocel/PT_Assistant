@@ -29,16 +29,17 @@ def index():
 
 @socketio.on('message')
 def handle_message(data):
-    print('received message: ' + data)
-    send("SERVER: xxxxxxxxxxxxxxx")
+    print('received message:\n' + data)
+    send("SERVER: awnser.....")
     
 @socketio.on('json')
 def handle_json(json):
-    print('received json: ' + str(json))
+    print('received json:\n' + str(json))
     send(json, json=True)
     
 @socketio.on('my event')
 def handle_my_custom_event(json):
+    print('received json:\n' + str(json))
     emit('my response', json)
 
 if __name__ == '__main__':
