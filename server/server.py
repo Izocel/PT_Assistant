@@ -17,7 +17,6 @@ if config["sentry_env"] == 'production':
 
 
 ALLOWED_HOSTS= '*'
-
 app = Flask(__name__)
 cors = CORS(app)
 socketio = SocketIO(app, cors_allowed_origins=ALLOWED_HOSTS)
@@ -43,4 +42,5 @@ def handle_stream(data):
     emit('my response', data, broadcast=True)
 
 if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
     socketio.run(app)
