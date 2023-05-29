@@ -1,4 +1,6 @@
 Flask
+flask-cors
+flask-socketio
 boto3
 botocore
 EdgeGPT

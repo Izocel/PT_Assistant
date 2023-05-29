@@ -1,7 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MemoryRouter as Router, Routes, Route } from "react-router-dom";
-import icon from "../../assets/icon.svg";
 import "./App.css";
+
+import { io } from "socket.io-client";
+const socket = io("http://127.0.0.1:5000");
+
+// client-side
+socket.on("connect", () => {
+  console.log(socket.id);
+});
+
+socket.on("disconnect", () => {
+  console.log(socket.id); // undefined
+});
+
+// client-side
+socket.on("message", (data) => {
+  console.log(data);
+});
+
+// client-side
+socket.emit("message", "CLIENT: Hello world");
+
 
 function Home(props) {
   const [devices, setDevices] = useState();
