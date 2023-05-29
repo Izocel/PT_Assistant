@@ -13,4 +13,8 @@ socket.on("message", (data) => {
   console.log("ON MESSAGE:\n", data);
 });
 
+socket.on("stream", function (data) {
+  console.log("ON STREAM:\n", data);
+});
+
 export default socket;

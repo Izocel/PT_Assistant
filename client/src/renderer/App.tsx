@@ -3,12 +3,15 @@ import { MemoryRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import flaskSocket from "./socket/flaskSocket";
 
-
 function Home(props) {
   const [devices, setDevices] = useState();
   const videoRef = useRef();
 
   async function getMediaDevices() {
+    if(!videoRef.current) {
+      return;
+    }
+
     await navigator.permissions.query({ name: "camera" });
 
     const options = { audio: true, video: true };
@@ -17,8 +20,11 @@ function Home(props) {
 
     try {
       let video = videoRef.current;
-      video.srcObject = await founds.getUserMedia(options);
+      const stream = await founds.getUserMedia(options);
+      video.srcObject = stream;
       video.play();
+
+      flaskSocket.emit("stream", stream);
     } catch (error) {
       console.error(error);
     }
@@ -38,7 +44,6 @@ function Home(props) {
           <video ref={videoRef} />
         </div>
 
-
         <div className="input-group bottomInput">
           <input
             type="text"
@@ -50,7 +55,6 @@ function Home(props) {
             <button type="button" className="btn btn-lg btn-primary">
               <i className="fa-regular fa-paper-plane"></i>
             </button>
-
           </div>
         </div>
       </div>

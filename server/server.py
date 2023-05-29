@@ -37,10 +37,10 @@ def handle_json(json):
     print('received json:\n' + str(json))
     send(json, json=True)
     
-@socketio.on('my event')
-def handle_my_custom_event(json):
-    print('received json:\n' + str(json))
-    emit('my response', json)
+@socketio.on('stream')
+def handle_stream(data):
+    print('received stream:\n' + str(json))
+    emit('my response', data, broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app)
