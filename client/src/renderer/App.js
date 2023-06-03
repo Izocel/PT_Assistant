@@ -5,7 +5,7 @@ import flaskSocket from "./socket/flaskSocket";
 
 const mockValue = `Powder oat cake cupcake cotton candy ice cream lemon drops dessert. Chupa chups cake donut toffee cookie. Cotton candy shortbread jujubes bonbon cheesecake. Toffee gummies jujubes marshmallow cake cotton candy gummies. Sugar plum chupa chups fruitcake cotton candy lemon drops croissant dessert liquorice. Tiramisu tart gummies muffin fruitcake gummies jelly chocolate bar dragée. Macaroon gummies donut cake candy tart macaroon chocolate bar. Sweet roll candy canes chupa chups pastry toffee sweet roll. Apple pie wafer tootsie roll bear claw shortbread halvah pudding toffee jujubes. Chocolate toffee jelly bonbon powder. Croissant donut apple pie apple pie caramels jelly-o caramels. Wafer gingerbread oat cake cupcake sugar plum cake dessert bear claw. Fruitcake apple pie tart dragée tart sweet roll topping toffee cotton candy. Cheesecake marzipan chocolate cake jelly beans apple pie jujubes icing.
 
-Muffin halvah sugar plum tootsie roll bonbon bonbon cake topping pudding. Topping cake halvah dragée pudding cotton candy candy canes. Lollipop sesame snaps danish cheesecake bear claw halvah. Brownie pastry danish chocolate bar sugar plum cotton candy. Gingerbread apple pie pastry chupa chups tart liquorice lollipop muffin. Jelly beans soufflé bonbon cake dessert dessert. Marzipan macaroon macaroon pie tootsie roll cake cookie jelly. Shortbread pie chocolate cake pie pudding marshmallow. Apple pie sesame snaps candy sugar plum oat cake cake gingerbread. Chocolate bar lemon drops liquorice pastry oat cake wafer pie marshmallow biscuit. Chocolate caramels dragée powder bonbon biscuit cupcake halvah shortbread. Dragée tart sweet cake cake.
+Muffin halvah sugar plum tootsie roll bonbon bonbon cake topping pudding. Chocolate caramels dragée powder bonbon biscuit cupcake halvah shortbread. Dragée tart sweet cake cake.
 `;
 
 function Home(props) {
@@ -85,54 +85,59 @@ function Home(props) {
   function render() {
     return (
       <div className="root">
-        <div className="topRow">
-          <div className="d-flex flex-row-reverse topVideo">
-            <video id={"myMedia"} ref={videoRef} />
+        <header>
+          <div id={"myMedia"} className="d-flex flex-row-reverse topVideo">
+            <video ref={videoRef} />
           </div>
-        </div>
+        </header>
 
-        <div hidden id="video-grid">
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
+        <main>
+        <div className="headerMargin"></div>
+          <div hidden id="video-grid">
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
 
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
 
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
 
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
-          <video />
-        </div>
-
-        <div id="chat-container">
-          <p className="aiResponse">{mockValue}</p>
-          <p className="userResponse">{mockValue}</p>
-
-          <div className="col">
-            <p className="userResponse">hello bob</p>
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
+            <video />
           </div>
-        </div>
 
-        <div id="bottom-container">
+          <div id="chat-container">
+            <p className="aiResponse">{"AI:\n" + mockValue}</p>
+            <p className="userResponse">{"USER:\n" + mockValue}</p>
+            <p className="userResponse">{"USER:\n" + mockValue}</p>
+            <p className="userResponse">{"USER:\n" + mockValue}</p>
+            <p className="userResponse">{"USER:\n" + mockValue}</p>
+            <p className="userResponse">{"USER:\n" + mockValue}</p>
+          </div>
+
+          <div className="footerMargin"></div>
+        </main>
+
+        <footer>
           <div className="input-group bottomInput">
-            <input
+            <textarea
               type="text"
               className="form-control"
               aria-label="Text input with send button"
@@ -145,7 +150,7 @@ function Home(props) {
               </button>
             </div>
           </div>
-        </div>
+        </footer>
       </div>
     );
   }

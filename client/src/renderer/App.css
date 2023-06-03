@@ -1,8 +1,31 @@
-/*
- * @NOTE: Prepend a `~` to css file paths that are in your node_modules
- *        See https://github.com/webpack-contrib/sass-loader#imports
- */
-body {
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(200.96deg,
+      #fedc2a -29.09%,
+      #dd5789 51.77%,
+      #7a2c9e 129.35%);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(200.96deg,
+      #fedc2a -29.09%,
+      #dd5789 51.77%,
+      #7a2c9e 129.35%);
+}
+
+
+html, body, #root, .root {
   color: white;
   height: 100vh;
   background: linear-gradient(200.96deg,
@@ -13,28 +36,49 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   font-family: 'Fira sans', sans-serif;
-  overflow: hidden;
 }
 
-#root, .root {
-  height: 100vh;
-  overflow: hidden;
-}
-
-.topRow {
-  height: 23%;
-  max-height: 23%;
-}
-
-.topVideo {
-  position: absolute;
-  width: 350px;
-  max-width: 350px;
-  height: 225px;
-  max-height: 225px;
-  padding: 1rem;
+header {
+  height: 20vh;
+  width: 100%;
+  position: fixed;
   top: 0;
-  right: 0;
+}
+
+main::-webkit-scrollbar {
+  display: none;
+}
+
+main {
+  height: 100vh;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  overflow: auto;
+}
+
+footer {
+  height: 10vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: #333;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.footerMargin {
+  height: 10vh;
+  min-height: 10vh;
+  width: 100%;
+}
+
+.headerMargin {
+  height: 20vh;
+  min-height: 20vh;
+  width: 100%;
 }
 
 video {
@@ -43,33 +87,31 @@ video {
   background-image: url("https://www.nicepng.com/png/detail/136-1366211_group-of-10-guys-login-user-icon-png.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
 }
 
-.topVideo video {
-  width: auto;
-  max-width: 100%;
-  height: auto;
+#myMedia {
+  max-height: 20vh;
+  padding: 1rem;
+}
+
+#myMedia video {
+  width: 250px;
+  max-width: 250px;
+  height: 16vh;
+  max-height: 16vh;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-#video-grid::-webkit-scrollbar {
-  display: none;
-}
-
 #video-grid {
-  height: 650px;
-  max-height: 650px;
   justify-content: center;
   display: grid;
   padding: 1rem;
+  margin-block: 1rem;
   gap: 1rem;
   grid-auto-rows: 200px;
   grid-template-columns: repeat(auto-fill, 300px);
   background-color: rgba(24, 39, 75, 0.32);
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  overflow: auto;
 }
 
 #video-grid video {
@@ -77,20 +119,10 @@ video {
   height: 200px;
 }
 
-#chat-container::-webkit-scrollbar {
-  display: none;
-}
-
 #chat-container {
-  height: 650px;
-  max-height: 650px;
   justify-content: center;
   padding: 1rem;
   margin-block: 1rem;
-  background-color: rgba(24, 39, 75, 0.24);
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  overflow: auto;
 }
 
 #chat-container p {
@@ -101,7 +133,7 @@ video {
   font-size: x-large;
   font-weight: 700;
   font-family: monospace;
-  white-space:break-spaces;
+  white-space: break-spaces;
   background-color: rgba(24, 39, 75, 0.32);
 }
 
@@ -110,41 +142,19 @@ video {
   background-color: rgba(24, 39, 75, 0.42);
 }
 
-.bottomInput {
-  height: 10%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 1.5rem;
-  padding-inline: 175px;
-  align-items:safe;
-  align-content:center;
-  justify-content: center;
-  vertical-align: middle;
-  background-color: rgba(24, 39, 75, 0.32);
+.bottomInput textarea, .bottomInput button  {
+  height: 100%;
 }
 
-.bottomInput button {
-  color: #fff;
-  font-size: x-large;
-}
-
-.bottomInput input {
-  margin-right: -3.2rem;
+.bottomInput textarea, .bottomInput textarea:focus {
   color: #fff;
   font-weight: 700;
+  font-size: larger;
   background-color: rgba(24, 39, 75, 0.14);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  resize:none;
 }
 
-.bottomInput input:focus {
-  color: #fff;
-  font-weight: 700;
-  background-color: rgba(24, 39, 75, 0.14);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-
-.bottomInput input::placeholder {
+.bottomInput textarea::placeholder {
   color: #fff;
 }
