@@ -84,8 +84,26 @@ function Home(props) {
   }
 
   async function sendChatMessage(event) {
-    console.warn("SEND CHAT MSG:", event.currentTarget.value);
+    const message = event?.currentTarget.value;
+    const chatBox = getChatBox()
+    const newElement = getuserMsgFromTemplate();
+
+    let time = new Date();
+    time = time.toLocaleString();
+    newElement.innerText = `[${time.toString()}]\nUSER-X:\r${message}`;
+
+    chatBox.appendChild(newElement);
+    console.warn("SEND CHAT MSG:", message  );
     event.currentTarget.value = null;
+    scrollChatToBottom();
+  }
+
+  function getChatBox() {
+    return document.getElementById('chat-container');
+  }
+
+  function getuserMsgFromTemplate() {
+    return document.getElementById("userResponse").firstElementChild.cloneNode();
   }
 
   async function init() {
@@ -161,6 +179,14 @@ function Home(props) {
           </div>
 
           <div id="chat-container">
+          <template hidden id="aiResponse">
+              <p className="userResponse"></p>
+            </template>
+
+            <template hidden id="userResponse">
+              <p className="userResponse"></p>
+            </template>
+
             <p className="aiResponse">{"AI:\n" + mockValue}</p>
             <p className="userResponse">{"USER:\n" + mockValue}</p>
             <p className="userResponse">{"USER:\n" + mockValue}</p>
