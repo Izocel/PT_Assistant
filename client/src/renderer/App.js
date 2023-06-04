@@ -51,6 +51,43 @@ function Home(props) {
     peers[userId] = call;
   }
 
+  function scrollChatToBottom() {
+    const element = document.getElementById("chat-container")?.parentElement;
+    element?.scrollTo(0, Number.MAX_SAFE_INTEGER - 1);
+  }
+
+  function scrollChatToTop() {
+    const element = document.getElementById("chat-container")?.parentElement;
+    element?.scrollTo(0, 0);
+  }
+
+  function handleKeyEnter(event) {
+    if (event.currentTarget.value.length) {
+      event.currentTarget.classList.remove("border-danger");
+    }
+
+    if (
+      event.code !== "Enter" ||
+      event.shiftKey ||
+      event.altKey ||
+      event.ctrlKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    if (!event.currentTarget.value.length) {
+      event.currentTarget.classList.add("border-danger");
+      return;
+    }
+    sendChatMessage(event);
+  }
+
+  async function sendChatMessage(event) {
+    console.warn("SEND CHAT MSG:", event.currentTarget.value);
+    event.currentTarget.value = null;
+  }
+
   async function init() {
     await navigator.permissions.query({ name: "camera" });
     const options = { audio: true, video: true };
@@ -73,7 +110,7 @@ function Home(props) {
         connectToNewUser(userId, stream);
       });
     } catch (error) {
-      console.error(error);
+      console.warn(error);
     }
   }
 
@@ -92,7 +129,7 @@ function Home(props) {
         </header>
 
         <main>
-        <div className="headerMargin"></div>
+          <div className="headerMargin"></div>
           <div hidden id="video-grid">
             <video />
             <video />
@@ -130,6 +167,16 @@ function Home(props) {
             <p className="userResponse">{"USER:\n" + mockValue}</p>
             <p className="userResponse">{"USER:\n" + mockValue}</p>
             <p className="userResponse">{"USER:\n" + mockValue}</p>
+
+            <div id="scrollToBottom">
+              <button
+                onClick={scrollChatToBottom}
+                type="button"
+                className="btn btn-lg btn-outline-light"
+              >
+                <i class="fa-solid fa-arrow-down"></i>
+              </button>
+            </div>
           </div>
 
           <div className="footerMargin"></div>
@@ -138,6 +185,7 @@ function Home(props) {
         <footer>
           <div className="input-group bottomInput">
             <textarea
+              onKeyDown={handleKeyEnter}
               type="text"
               className="form-control"
               aria-label="Text input with send button"
@@ -145,7 +193,11 @@ function Home(props) {
             />
 
             <div className="input-group-append">
-              <button type="button" className="btn btn-lg btn-primary">
+              <button
+                onClick={handleKeyEnter}
+                type="button"
+                className="btn btn-lg btn-primary"
+              >
                 <i className="fa-regular fa-paper-plane"></i>
               </button>
             </div>
