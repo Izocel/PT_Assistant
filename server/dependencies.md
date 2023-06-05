@@ -9,5 +9,6 @@ openai_whisper
 pydub
 PyAudio
 python-dotenv
+SpeechRecognition
 
 sentry-sdk
