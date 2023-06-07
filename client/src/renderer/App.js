@@ -1,11 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { createElement, useEffect, useRef, useState } from "react";
 import { MemoryRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import flaskSocket from "./socket/flaskSocket";
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
 
 const mockValue = `Powder oat cake cupcake cotton candy ice cream lemon drops dessert. Chupa chups cake donut toffee cookie. Cotton candy shortbread jujubes bonbon cheesecake. Toffee gummies jujubes marshmallow cake cotton candy gummies. Sugar plum chupa chups fruitcake cotton candy lemon drops croissant dessert liquorice. Tiramisu tart gummies muffin fruitcake gummies jelly chocolate bar dragée. Macaroon gummies donut cake candy tart macaroon chocolate bar. Sweet roll candy canes chupa chups pastry toffee sweet roll. Apple pie wafer tootsie roll bear claw shortbread halvah pudding toffee jujubes. Chocolate toffee jelly bonbon powder. Croissant donut apple pie apple pie caramels jelly-o caramels. Wafer gingerbread oat cake cupcake sugar plum cake dessert bear claw. Fruitcake apple pie tart dragée tart sweet roll topping toffee cotton candy. Cheesecake marzipan chocolate cake jelly beans apple pie jujubes icing.
 
 Muffin halvah sugar plum tootsie roll bonbon bonbon cake topping pudding. Chocolate caramels dragée powder bonbon biscuit cupcake halvah shortbread. Dragée tart sweet cake cake.
+`;
+
+const mockAdvancedValue = `
+here's some \`\`\`code-blocks\`\`\` :
+
+\`\`\`js
+    const message = event?.currentTarget.value;
+    const chatBox = getChatBox();
+    const newElement = getuserMsgNodeFromTemplate();
+
+    let time = new Date();
+    time = time.toLocaleString();
+\`\`\`
 `;
 
 function Home(props) {
@@ -67,7 +82,8 @@ function Home(props) {
     }
 
     if (
-      event.code !== "Enter" ||
+      event.code !== "Enter" &&
+      event.code !== "NumpadEnter" ||
       event.shiftKey ||
       event.altKey ||
       event.ctrlKey
@@ -84,26 +100,44 @@ function Home(props) {
   }
 
   async function sendChatMessage(event) {
-    const message = event?.currentTarget.value;
-    const chatBox = getChatBox()
-    const newElement = getuserMsgFromTemplate();
+    const message = mockAdvancedValue || event?.currentTarget.value;
+    const chatBox = getChatBox();
+    const newElement = getuserMsgNodeFromTemplate();
 
     let time = new Date();
     time = time.toLocaleString();
-    newElement.innerText = `[${time.toString()}]\nUSER-X:\r${message}`;
+
+    const codeBlocks = message;
+    const highlightedCode = hljs.highlightAuto(codeBlocks.replaceAll('```', ''));
+
+    const textNode = newElement.firstElementChild;
+    textNode.innerHTML = message;
+
+    const codeNode = document.createElement('div');
+    codeNode.classList.add('chatCode');
+    codeNode.innerHTML = highlightedCode.value;
+    newElement.appendChild(codeNode);
 
     chatBox.appendChild(newElement);
-    console.warn("SEND CHAT MSG:", message  );
+    console.warn("SEND CHAT MSG:", message);
     event.currentTarget.value = null;
     scrollChatToBottom();
   }
 
   function getChatBox() {
-    return document.getElementById('chat-container');
+    return document.getElementById("chat-container");
   }
 
-  function getuserMsgFromTemplate() {
-    return document.getElementById("userResponse").firstElementChild.cloneNode();
+  function getuserMsgNodeFromTemplate() {
+    return document
+      .getElementById("userResponse")
+      .firstElementChild.cloneNode(true);
+  }
+
+  function getAiMsgNodeFromTemplate() {
+    return document
+      .getElementById("aiResponse")
+      .firstElementChild.cloneNode(true);
   }
 
   async function init() {
@@ -179,15 +213,22 @@ function Home(props) {
           </div>
 
           <div id="chat-container">
-          <template hidden id="aiResponse">
-              <p className="userResponse"></p>
+            <template hidden id="aiResponse">
+              <div className="aiResponse">
+                <span></span>
+              </div>
             </template>
 
             <template hidden id="userResponse">
-              <p className="userResponse"></p>
+              <div className="userResponse">
+                <span></span>
+              </div>
             </template>
 
-            <p className="aiResponse">{"AI:\n" + mockValue}</p>
+            <div className="aiResponse">
+              <p>{"AI:\n" + mockValue}</p>
+            </div>
+
             <p className="userResponse">{"USER:\n" + mockValue}</p>
             <p className="userResponse">{"USER:\n" + mockValue}</p>
             <p className="userResponse">{"USER:\n" + mockValue}</p>

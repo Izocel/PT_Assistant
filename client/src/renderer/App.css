@@ -118,7 +118,7 @@ video {
   margin-block: 1rem;
 }
 
-#chat-container p {
+#chat-container .userResponse, #chat-container .aiResponse  {
   width: 95%;
   padding: 1rem;
   margin-block: 1.5rem;
@@ -133,6 +133,12 @@ video {
 #chat-container .aiResponse {
   color: aqua;
   background-color: rgba(24, 39, 75, 0.42);
+}
+
+.chatCode {
+  padding: 1rem;
+  border-radius: 1.75rem;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .bottomInput textarea, .bottomInput button  {
