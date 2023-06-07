@@ -3,7 +3,7 @@ flask-cors
 flask-socketio
 boto3
 botocore
-EdgeGPT
+EdgeGPT==0.7.0
 openai
 openai_whisper
 pydub

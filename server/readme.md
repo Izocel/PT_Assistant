@@ -26,6 +26,8 @@ https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html
 
 # .env example
 ```
+version=1.0.0
+name=PT_Assistant
 aws_region=us-east-1
 aws_access_key_id=XXXXXXXXXXXXXXXXXXXXXX
 aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXX
